@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "dist/vercel.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/vercel.js"
+    }
+  ],
+  "buildCommand": "npm run build && npm run prisma:generate",
+  "installCommand": "npm install",
+  "outputDirectory": "dist",
+  "env": {
+    "DATABASE_URL": "@database-url",
+    "AUTH_SECRET": "@auth-secret",
+    "AUTH_TRUST_HOST": "@auth-trust-host",
+    "NODE_ENV": "@node-env",
+    "FRONTEND_URL": "@frontend-url"
+  }
+}

@@ -1,0 +1,12 @@
+node_modules
+.env
+.env.*
+!.env.example
+src
+tsconfig.json
+tsconfig.build.json
+bun.lockb
+*.md
+!README.md
+.git
+.gitignore

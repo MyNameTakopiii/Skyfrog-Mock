@@ -5,6 +5,7 @@ on:
     branches: ["main"]
     paths:
       - "frontend/**"
+      - ".github/workflows/frontend.yml"
   workflow_dispatch: # เพิ่มให้สามารถ trigger manually ได้
 
 # ต้องมี permissions สำหรับ GitHub Pages
@@ -27,9 +28,10 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
 
-      - name: Install and Build
+      - name: Clean and Build
         working-directory: ./frontend
         run: |
+          rm -rf dist
           bun install
           bun run build
 
