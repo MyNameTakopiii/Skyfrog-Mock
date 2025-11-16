@@ -1,35 +1,33 @@
 {
+  // https://nitro.build/guide/typescript
+  // "extends": "./.nitro/types/tsconfig.json",
   "compilerOptions": {
-    // Environment setup & latest features
-    "lib": ["ESNext"],
+    "ignoreDeprecations": "6.0",
+    // Module resolution
     "target": "ESNext",
-    "module": "Preserve",
-    "moduleDetection": "force",
-    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
 
-    // Bun bundler compatibility
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-
-    // No emit (required for allowImportingTsExtensions)
-    "noEmit": true,
-
-    // Best practices
+    // Core checks
     "strict": true,
+    "noEmit": true,
     "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+
+    // Additional safety
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
+    "useUnknownInCatchVariables": true,
+    "noUnusedLocals": true,
+    // "noUnusedParameters": true,
 
-    // Optional stricter flags
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false,
-
-    // Interop
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src"]
+     // Libs & paths
+    "lib": ["ESNext", "DOM"],
+    "baseUrl": ".",
+  }
 }
