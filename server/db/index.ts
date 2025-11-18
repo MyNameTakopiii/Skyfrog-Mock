@@ -12,12 +12,12 @@ import * as schema from "./schema";
 function getDatabasePath(): string {
   // Check if we're in production build (.output/server)
   const currentDir = dirname(fileURLToPath(import.meta.url));
-  
+
   // In production, database is copied to .output/server/data.db
   if (currentDir.includes(".output")) {
     return join(currentDir, "..", "data.db");
   }
-  
+
   // In development, database is in project root
   return "data.db";
 }

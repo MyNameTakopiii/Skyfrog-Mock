@@ -18,7 +18,9 @@ export default defineEventHandler(async (event) => {
       return;
     }
 
-    console.log(`GET /api/products/me - Fetching products for seller ID: ${user.id}`);
+    console.log(
+      `GET /api/products/me - Fetching products for seller ID: ${user.id}`,
+    );
 
     const sellerProducts = await db
       .select({

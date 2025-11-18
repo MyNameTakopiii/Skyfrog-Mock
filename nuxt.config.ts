@@ -18,6 +18,5 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "@nuxt/hints",
     "@nuxthub/core",
-    
   ],
 });

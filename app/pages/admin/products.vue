@@ -120,7 +120,7 @@
                         :src="product.imageUrl"
                         :alt="product.name"
                         class="h-16 w-16 rounded-lg object-cover border border-gray-200"
-                      >
+                      />
                     </div>
                     <div class="ml-4">
                       <div class="text-sm font-medium text-gray-900">
@@ -248,7 +248,7 @@
               :src="productToDelete.imageUrl"
               :alt="productToDelete.name"
               class="h-16 w-16 rounded-lg object-cover border border-gray-200"
-            >
+            />
             <div class="ml-4">
               <p class="text-sm font-medium text-gray-900">
                 {{ productToDelete.name }}
@@ -310,8 +310,13 @@ definePageMeta({
 
 // Composables
 const auth = useCustomAuth();
-const { products, fetchMyProducts, createProduct, updateProduct, deleteProduct } =
-  useProducts();
+const {
+  products,
+  fetchMyProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} = useProducts();
 const router = useRouter();
 
 // Loading states
