@@ -19,4 +19,7 @@ export default defineNuxtConfig({
     "@nuxt/hints",
     "@nuxthub/core",
   ],
+  hub: {
+    database: true, // เปิดให้ Nuxthub manage SQLite
+  },
 });
