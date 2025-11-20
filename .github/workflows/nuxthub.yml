@@ -8,33 +8,27 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    defaults:
-      run:
-        working-directory: ./
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          version: 10
+          bun-version: latest
 
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'pnpm'
-          cache-dependency-path: .//pnpm-lock.yaml
 
       - name: Install dependencies
-        run: pnpm install
+        run: bun install
 
       - name: Ensure NuxtHub module is installed
-        run: pnpx nuxthub@latest ensure
+        run: bunx nuxthub@latest ensure
 
       - name: Build & Deploy to NuxtHub
         uses: nuxt-hub/action@v2
         with:
-          project-key: mock-ch9n
-          directory: ./
+          project-key: mock-skyfrog-6na9
