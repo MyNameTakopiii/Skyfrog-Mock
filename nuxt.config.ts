@@ -12,14 +12,8 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    "@nuxt/content",
     "@nuxt/eslint",
     "@nuxt/image",
     "@nuxt/ui",
-    "@nuxt/hints",
-    "@nuxthub/core",
   ],
-  hub: {
-    database: true, // เปิดให้ Nuxthub manage SQLite
-  },
 });
