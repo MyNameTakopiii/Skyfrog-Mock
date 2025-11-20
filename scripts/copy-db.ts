@@ -1,30 +1,20 @@
 import { copyFileSync, existsSync, mkdirSync } from "fs";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
+import { join } from "path";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const cwd = process.cwd();
 
-// local DB (root)
-const sourceDb = join(__dirname, "..", "data.db");
+const source = join(cwd, "data.db");
+const target = join(cwd, ".output", "server", ".data", "data.db");
 
-// production DB (.data)
-const targetDb = join(__dirname, "..", ".data", "data.db");
+console.log("📦 Copying SQLite database...");
 
-console.log("📦 Copy DB to .data folder (Nuxthub)...");
-
-if (!existsSync(sourceDb)) {
-  console.error("❌ data.db not found!");
-  console.log("💡 Run: bunx drizzle-kit push && bun run db:seed");
+if (!existsSync(source)) {
+  console.error("❌ data.db not found. Did you run `bunx drizzle-kit push`?");
   process.exit(1);
 }
 
-// Ensure .data directory exists
-mkdirSync(dirname(targetDb), { recursive: true });
+mkdirSync(join(cwd, ".output", "server", ".data"), { recursive: true });
 
-// Copy DB file
-copyFileSync(sourceDb, targetDb);
+copyFileSync(source, target);
 
-console.log("✅ Done! Database copied:");
-console.log("   Source:", sourceDb);
-console.log("   Target:", targetDb);
+console.log("✅ Copied to", target);
