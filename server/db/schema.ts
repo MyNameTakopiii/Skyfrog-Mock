@@ -1,43 +1,43 @@
-import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
+import { pgTable, text, integer, serial, timestamp, numeric } from "drizzle-orm/pg-core";
 
 /**
  * Users table for sellers
  * Stores authentication and profile information for sellers who can list products
  */
-export const users = sqliteTable("users", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
   firstName: text("first_name").notNull(),
   lastName: text("last_name").notNull(),
   email: text("email").notNull().unique(),
   password: text("password").notNull(), // Hashed password
   phone: text("phone").notNull(), // Phone number for PromptPay QR code
-  createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
 /**
  * Products table
  * Stores product catalog information
  */
-export const products = sqliteTable("products", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const products = pgTable("products", {
+  id: serial("id").primaryKey(),
   sellerId: integer("seller_id")
     .notNull()
     .references(() => users.id), // Product owner
   name: text("name").notNull(),
   description: text("description").notNull(),
-  price: real("price").notNull(),
+  price: numeric("price", { precision: 10, scale: 2 }).notNull(),
   imageUrl: text("image_url").notNull(),
   stock: integer("stock").notNull().default(0),
-  createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
-  updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
 /**
  * Orders table
  * Stores order information including payment verification status
  */
-export const orders = sqliteTable("orders", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+export const orders = pgTable("orders", {
+  id: serial("id").primaryKey(),
   productId: integer("product_id")
     .notNull()
     .references(() => products.id),
@@ -45,11 +45,11 @@ export const orders = sqliteTable("orders", {
   customerEmail: text("customer_email"),
   customerPhone: text("customer_phone"),
   quantity: integer("quantity").notNull().default(1),
-  totalAmount: real("total_amount").notNull(),
+  totalAmount: numeric("total_amount", { precision: 10, scale: 2 }).notNull(),
   paymentSlipUrl: text("payment_slip_url"),
   status: text("status").notNull().default("pending"), // pending, verified, rejected
   ocrData: text("ocr_data"), // JSON string of extracted OCR data
-  createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
-  verifiedAt: integer("verified_at", { mode: "timestamp" }),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  verifiedAt: timestamp("verified_at"),
   verifiedBy: integer("verified_by").references(() => users.id),
 });

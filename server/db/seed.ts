@@ -1,10 +1,11 @@
+import "dotenv/config";
 import { db } from "./index";
 import { users, products, orders } from "./schema";
 import bcrypt from "bcryptjs";
 
 /**
  * Seed script to populate the database with sample data
- * Run with: node --loader tsx server/db/seed.ts
+ * Run with: bun run db:seed
  */
 
 async function seed() {
