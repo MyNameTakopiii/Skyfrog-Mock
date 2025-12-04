@@ -56,7 +56,7 @@
 - **NeonDB PostgreSQL** - Image Storage (base64 in database)
 - **PromptPay QR** - Payment QR Generation
 - **Tesseract.js** - OCR for payment slip verification
-- **NuxtHub** - Deployment & Collaboration
+- **Vercel** - Deployment & Collaboration
 
 ## 📋 Prerequisites
 
