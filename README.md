@@ -5,12 +5,14 @@
 ## ✨ Features
 
 ### 🔐 Authentication & Authorization
+
 - ✅ ระบบ Login/Register สำหรับพ่อค้า
 - ✅ JWT Authentication
 - ✅ การจำกัดสิทธิ์ Public/Private routes
 - ✅ Middleware protection
 
 ### 📦 Product Management (CRUD)
+
 - ✅ เพิ่มสินค้าใหม่ (Create)
 - ✅ แสดงรายการสินค้า (Read)
 - ✅ แก้ไขสินค้า (Update)
@@ -20,11 +22,13 @@
 - ✅ พ่อค้าแต่ละคนเห็นเฉพาะสินค้าของตัวเอง
 
 ### 💳 Payment System
+
 - ✅ สร้าง PromptPay QR Code (ใช้เบอร์โทรของพ่อค้าแต่ละคน)
 - ✅ อัปโหลดสลิปการโอนเงิน
 - ✅ OCR สำหรับตรวจสอบสลิป (Tesseract.js)
 
 ### 📊 Order Management
+
 - ✅ ดูรายการ Orders
 - ✅ กรอง Orders ตามสถานะ
 - ✅ ยืนยัน/ปฏิเสธการชำระเงิน
@@ -32,6 +36,7 @@
 ## 🚀 Tech Stack
 
 ### Frontend
+
 - **Nuxt 3** - Vue.js Framework
 - **Vue 3** - Composition API
 - **TypeScript** - Type Safety
@@ -39,6 +44,7 @@
 - **Nuxt UI** - UI Components
 
 ### Backend
+
 - **Nuxt Server API** - RESTful API
 - **Drizzle ORM** - Database ORM
 - **PostgreSQL (NeonDB)** - Database
@@ -46,6 +52,7 @@
 - **Zod** - Validation
 
 ### Services
+
 - **Cloudinary** - Image Upload (with local fallback)
 - **PromptPay QR** - Payment QR Generation
 - **Tesseract.js** - OCR for payment slip verification
@@ -111,11 +118,13 @@ bun run dev
 สำหรับทดสอบระบบ (หลังจากรัน `bun run db:seed`):
 
 ### Seller Account 1
+
 - **Email:** `john@example.com`
 - **Password:** `password123`
 - **Phone:** 0812345678
 
 ### Seller Account 2
+
 - **Email:** `jane@example.com`
 - **Password:** `password123`
 - **Phone:** 0823456789
@@ -160,11 +169,13 @@ bun run dev
 ## 🔌 API Endpoints
 
 ### Authentication
+
 - `POST /api/auth/register` - Register new seller
 - `POST /api/auth/login` - Login
 - `GET /api/auth/me` - Get current user
 
 ### Products
+
 - `GET /api/products` - Get all products (public)
 - `GET /api/products/me` - Get seller's products (protected)
 - `GET /api/products/:id` - Get product by ID
@@ -173,15 +184,18 @@ bun run dev
 - `DELETE /api/products/:id` - Delete product (protected)
 
 ### Orders
+
 - `GET /api/orders` - Get all orders (protected)
 - `POST /api/orders/create` - Create order (public)
 - `POST /api/orders/:id/verify` - Verify payment (protected)
 
 ### Payment
+
 - `POST /api/payment/qr` - Generate PromptPay QR
 - `POST /api/payment/ocr` - OCR payment slip
 
 ### Upload
+
 - `POST /api/upload/image` - Upload image
 
 ## 🚀 Deployment
@@ -274,12 +288,14 @@ bun run format           # Format code with Prettier
 ## 🐛 Troubleshooting
 
 ### Database Connection Error
+
 ```bash
 # ตรวจสอบ DATABASE_URL ใน .env
 # ตรวจสอบว่า NeonDB database ทำงานอยู่
 ```
 
 ### Build Error
+
 ```bash
 # ลบ node_modules และ install ใหม่
 rm -rf node_modules .nuxt .output
@@ -288,6 +304,7 @@ bun run build
 ```
 
 ### Image Upload ไม่ทำงาน
+
 ```bash
 # ตรวจสอบ Cloudinary credentials
 # หรือใช้ local fallback (ไม่ต้องตั้งค่า Cloudinary)

@@ -1,4 +1,11 @@
-import { pgTable, text, integer, serial, timestamp, numeric } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  integer,
+  serial,
+  timestamp,
+  numeric,
+} from "drizzle-orm/pg-core";
 
 /**
  * Users table for sellers
@@ -52,4 +59,17 @@ export const orders = pgTable("orders", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   verifiedAt: timestamp("verified_at"),
   verifiedBy: integer("verified_by").references(() => users.id),
+});
+
+/**
+ * Uploads table
+ * Stores image uploads as base64 encoded data in the database
+ */
+export const uploads = pgTable("uploads", {
+  id: serial("id").primaryKey(),
+  fileName: text("file_name").notNull(),
+  mimeType: text("mime_type").notNull(),
+  data: text("data").notNull(), // Base64 encoded image data
+  size: integer("size").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 });

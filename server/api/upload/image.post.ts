@@ -1,14 +1,14 @@
-import { uploadImage } from "../../utils/cloudinary";
+import { uploadImageToDatabase } from "../../utils/uploads";
 import { handleBadRequestError, handleError } from "../../utils/errors";
 
 /**
- * Upload image to Cloudinary
- * Accepts base64 encoded image and returns secure URL
+ * Upload image to NeonDB
+ * Accepts base64 encoded image and returns image access URL
  */
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
-    const { image } = body;
+    const { image, fileName = "image" } = body;
 
     // Validate input
     if (!image || typeof image !== "string") {
@@ -24,18 +24,29 @@ export default defineEventHandler(async (event) => {
       );
     }
 
-    // Upload to Cloudinary
-    const imageUrl = await uploadImage(image);
+    // Determine MIME type from data URI
+    let mimeType = "image/jpeg"; // default
+    if (image.startsWith("data:")) {
+      const match = image.match(/^data:([^;]+)/);
+      if (match) {
+        mimeType = match[1];
+      }
+    }
 
-    // Return secure URL
+    // Upload to database
+    const { id, url } = await uploadImageToDatabase(image, fileName, mimeType);
+
+    // Return image URL
     return {
       success: true,
       data: {
-        imageUrl,
+        imageUrl: url,
+        uploadId: id,
       },
     };
   } catch (error) {
-    console.error("Image upload error:", error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error("Image upload error:", errorMessage, error);
     handleError(error, "Failed to upload image");
   }
 });

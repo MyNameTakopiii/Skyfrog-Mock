@@ -1,26 +1,12 @@
 {
   "version": "7",
-  "dialect": "sqlite",
+  "dialect": "postgresql",
   "entries": [
     {
       "idx": 0,
-      "version": "6",
-      "when": 1763434135845,
-      "tag": "0000_loving_shriek",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1763436647273,
-      "tag": "0001_awesome_ultimo",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1763467041006,
-      "tag": "0002_oval_mikhail_rasputin",
+      "version": "7",
+      "when": 1764822995388,
+      "tag": "0000_mushy_madame_hydra",
       "breakpoints": true
     }
   ]

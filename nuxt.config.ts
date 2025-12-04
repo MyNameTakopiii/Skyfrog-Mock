@@ -11,9 +11,5 @@ export default defineNuxtConfig({
       sourcemap: false, // Disable sourcemap warnings in production
     },
   },
-  modules: [
-    "@nuxt/eslint",
-    "@nuxt/image",
-    "@nuxt/ui",
-  ],
+  modules: ["@nuxt/eslint", "@nuxt/image", "@nuxt/ui"],
 });
