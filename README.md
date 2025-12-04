@@ -53,9 +53,10 @@
 
 ### Services
 
-- **Cloudinary** - Image Upload (with local fallback)
+- **NeonDB PostgreSQL** - Image Storage (base64 in database)
 - **PromptPay QR** - Payment QR Generation
 - **Tesseract.js** - OCR for payment slip verification
+- **NuxtHub** - Deployment & Collaboration
 
 ## 📋 Prerequisites
 
@@ -88,18 +89,16 @@ DATABASE_URL=postgresql://your-neon-connection-string
 
 # JWT Secret
 JWT_SECRET=your-secret-key-change-in-production
-
-# Cloudinary (Optional - มี local fallback)
-CLOUDINARY_CLOUD_NAME=your-cloud-name
-CLOUDINARY_API_KEY=your-api-key
-CLOUDINARY_API_SECRET=your-api-secret
 ```
 
 ### 4. Database Setup
 
 ```bash
-# Push schema to database
-bunx drizzle-kit push
+# Generate migrations
+bun run db:generate
+
+# Apply migrations to database
+bun run db:migrate
 
 # Seed sample data
 bun run db:seed
@@ -196,7 +195,26 @@ bun run dev
 
 ### Upload
 
-- `POST /api/upload/image` - Upload image
+- `POST /api/upload/image` - Upload image (stores in NeonDB)
+- `GET /api/uploads/:id` - Retrieve uploaded image
+
+
+## 📦 Database Schema Updates
+
+### New Uploads Table
+
+เพิ่มตาราง `uploads` สำหรับเก็บข้อมูลรูปภาพ:
+
+```sql
+CREATE TABLE "uploads" (
+  "id" serial PRIMARY KEY NOT NULL,
+  "file_name" text NOT NULL,
+  "mime_type" text NOT NULL,
+  "data" text NOT NULL,  -- base64 encoded image
+  "size" integer NOT NULL,
+  "created_at" timestamp DEFAULT now() NOT NULL
+);
+```
 
 ## 🚀 Deployment
 
@@ -220,21 +238,18 @@ git push origin main
      - **Install Command:** `bun install`
 
 3. **Add Environment Variables**
-   - `DATABASE_URL`
-   - `JWT_SECRET`
-   - `CLOUDINARY_CLOUD_NAME`
-   - `CLOUDINARY_API_KEY`
-   - `CLOUDINARY_API_SECRET`
+   - `DATABASE_URL` - NeonDB PostgreSQL connection string
+   - `JWT_SECRET` - Secret key for JWT token signing
 
 4. **Deploy!**
 
 ### Database Migration (After Deploy)
 
 ```bash
-# Push schema to production database
-bunx drizzle-kit push
+# Apply migrations to production database
+bun run db:migrate
 
-# Seed production data
+# Seed production data (optional)
 bun run db:seed
 ```
 
@@ -249,8 +264,8 @@ bun run build            # Build for production
 bun run preview          # Preview production build
 
 # Database
-bun run db:push          # Push schema to database
-bun run db:generate      # Generate migrations
+bun run db:generate      # Generate migrations from schema changes
+bun run db:migrate       # Apply pending migrations to database
 bun run db:seed          # Seed sample data
 bun run db:studio        # Open Drizzle Studio
 
@@ -306,8 +321,9 @@ bun run build
 ### Image Upload ไม่ทำงาน
 
 ```bash
-# ตรวจสอบ Cloudinary credentials
-# หรือใช้ local fallback (ไม่ต้องตั้งค่า Cloudinary)
+# ตรวจสอบว่ากำหนด DATABASE_URL ถูกต้อง
+# ตรวจสอบว่าได้รันการ migration แล้ว
+bun run db:migrate
 ```
 
 ## 📄 License
